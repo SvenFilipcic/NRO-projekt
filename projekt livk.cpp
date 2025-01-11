@@ -132,7 +132,6 @@ int main() {
 
     // Inicializacija matrike 
     vector<vector<int>> sosednja_vozlisca(n_vozlisc, vector<int>(4, -1));
-    double start_time_neighbors = omp_get_wtime();
 
     // Iskanje sosedov
 #pragma omp parallel for num_threads(num_threads)
@@ -179,8 +178,6 @@ int main() {
         sosednja_vozlisca[node_id] = node_i_neighbours;
     }
 
-    double end_time_neighbors = omp_get_wtime();
-    cout << "èas za sosede: " << (end_time_neighbors - start_time_neighbors) << "s\n";
 
  
     vector<vector<double>> A(n_vozlisc, vector<double>(n_vozlisc, 0));
@@ -251,7 +248,6 @@ int main() {
 
     // Zaèetna T
     vector<double> T(n_vozlisc, 150);
-    double start_time_gauss_seidel = omp_get_wtime();
 
     //Gauss_seidel
 #pragma omp parallel num_threads(num_threads)
@@ -274,9 +270,8 @@ int main() {
         }
     }
 
-    double end_time_gauss_seidel = omp_get_wtime();
-    cout << "èas za Gauss-Seidel: " << (end_time_gauss_seidel - start_time_gauss_seidel) << "s\n";
 
+   
     // VTK 
     ofstream output_file("rezultat_vtk3.vtk");
     output_file << "# vtk DataFile Version 3.0\n";
